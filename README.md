@@ -280,7 +280,6 @@ These findings confirmed the web server technology previously identified through
 
 No exact LiteSpeed version was disclosed.
 
-![HTTP Header Inspection](screenshots/curl.png)
 
 
 DirBuster was used to identify unlinked directories and potentially exposed application resources.
