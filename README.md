@@ -656,3 +656,50 @@ The following recommendations are proposed to address the vulnerabilities identi
 | Routine Hardening | V05 – MySQL Error Disclosure | Suppress detailed errors and implement secure logging. |
 
 
+## 7. Conclusion
+
+The NetworkWalks Week 4 final project provided practical experience conducting an authorised black-box penetration test against a web application.
+
+The assessment successfully demonstrated an SQL injection authentication bypass, recovery of three encrypted pathology reports and exposure of confidential employee and shareholder information through a publicly accessible database backup.
+
+Additional weaknesses involving directory indexing and verbose database error disclosure were also identified.
+
+The assessment highlighted the importance of secure authentication, strong password protection, appropriate access controls and secure storage of sensitive information.
+
+It also demonstrated the value of manual vulnerability testing, particularly when automated tools fail to identify application-specific weaknesses.
+
+Overall, the project strengthened my understanding of penetration testing methodology, vulnerability analysis, troubleshooting, risk assessment and professional security reporting.
+
+## 8. Lessons Learned
+
+- **Manual Penetration Testing:** Automated tools may fail to identify vulnerabilities that can be discovered through careful manual testing.
+- **SQL Injection:** Unsafe database query construction can undermine authentication controls and expose protected resources.
+- **Sensitive Data Exposure:** Improper backup storage can expose confidential information even when other security controls are present.
+- **Password Auditing:** Weak passwords can compromise encrypted documents through offline password recovery.
+- **Troubleshooting:** Understanding encryption formats and tool compatibility is essential when automated processes fail.
+- **Security Reporting:** Effective penetration testing requires documenting evidence, evaluating impact and recommending practical remediation measures.
+
+## 9. References
+
+- [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
+- [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+- [PortSwigger Web Security Academy](https://portswigger.net/web-security)
+- [Nmap Documentation](https://nmap.org/book/man.html)
+- [John the Ripper](https://www.openwall.com/john/)
+- [Hashcat](https://hashcat.net/hashcat/)
+
+---
+
+## Author Information
+
+**Ali Fares**  
+Cybersecurity Intern – NetworkWalks B084  
+Bachelor of Cybersecurity – University of Technology Sydney (UTS)
+
+**Project:** Week 4 – Final Penetration Testing Project  
+**Assessment Type:** Authorised Black-Box Penetration Test
+
+**GitHub:** [looshmaloosh](https://github.com/looshmaloosh)
+
+**Disclaimer:** All testing was conducted as part of an authorised educational penetration testing engagement. Public evidence has been sanitised to protect confidential information.
+
