@@ -143,3 +143,197 @@ Some automated tools, including sqlmap, did not successfully identify vulnerabil
 The engagement excluded denial-of-service testing, social engineering and activities outside the authorised domain.
 
 Consequently, the findings represent vulnerabilities demonstrated within the permitted testing scope rather than a complete assessment of all underlying hosting infrastructure.
+
+
+## 3. Reconnaissance and Enumeration
+
+Reconnaissance was conducted to identify publicly available information, exposed network services, web technologies and potentially accessible application resources associated with Mediroza General Hospital.
+
+Both passive and active reconnaissance techniques were used to understand the target's external attack surface before conducting vulnerability testing.
+
+### 3.1 WHOIS Enumeration
+
+WHOIS was used to identify the target domain's registration information and associated nameservers.
+
+The enumeration identified the following:
+
+- **Domain:** medirozahospital.com
+- **Registrar:** Namecheap, Inc.
+- **Registration Date:** 14 August 2026
+- **Expiration Date:** 14 August 2027
+- **Nameservers:** dns1.namecheaphosting.com and dns2.namecheaphosting.com
+- **DNSSEC Status:** Unsigned
+
+The results provided background information about the domain's registration and DNS infrastructure.
+
+
+### 3.2 DNS Lookup Using Nslookup
+
+Nslookup was used to resolve the target domain to its associated IPv4 address.
+
+The domain resolved to:
+
+`199.188.201.16`
+
+This information was used during subsequent network reconnaissance.
+
+
+
+### 3.3 DNS Enumeration Using DNSRecon
+
+DNSRecon was used to enumerate publicly available DNS records associated with the target domain.
+
+The scan identified:
+
+- A records identifying the website's IPv4 address.
+- NS records identifying the authoritative nameservers.
+- MX records associated with the domain's email services.
+- TXT records containing SPF and DMARC configuration.
+- SRV records advertising calendar, contact and email-related services.
+
+Two notable security observations were identified:
+
+**DNSSEC:** DNSRecon reported that DNSSEC was not configured.
+
+**DMARC:** The domain's published DMARC policy was configured as `p=none`, indicating a monitoring-only policy rather than requesting quarantine or rejection of failing messages.
+
+These observations were documented as potential security hardening opportunities rather than confirmed exploitable vulnerabilities.
+
+
+### 3.4 Network Enumeration Using Nmap
+
+Nmap was used to identify exposed network services and attempt service version detection.
+
+The initial scan was performed using:
+
+`nmap -sV 199.188.201.16`
+
+The scan identified several open TCP ports associated with the target's resolved hosting IP address.
+
+| Port | Service | Identified Technology |
+|---|---|---|
+| 21 | FTP | Pure-FTPd |
+| 26 | SMTP | Exim 4.100.1 |
+| 53 | DNS | BIND |
+| 80 | HTTP | HAProxy / LiteSpeed |
+| 110 | POP3 | Dovecot |
+| 143 | IMAP | Dovecot |
+| 443 | HTTPS | HAProxy / LiteSpeed |
+| 465 | SMTPS | Exim 4.100.1 |
+| 587 | SMTP | Exim 4.100.1 |
+| 993 | IMAPS | Dovecot |
+| 995 | POP3S | Dovecot |
+
+The scan also identified the hostname `server274-1.web-hosting.com`, suggesting that the IP address was associated with shared hosting infrastructure.
+
+Although multiple services were exposed, their presence did not independently establish exploitable vulnerabilities.
+
+
+Further inspection of the FTP service identified Pure-FTPd with anonymous authentication disabled and TLS support advertised.
+
+A separate MySQL service check reported TCP port 3306 as filtered, preventing direct database version identification.
+
+These results were recorded as reconnaissance observations rather than confirmed vulnerabilities.
+
+### 3.5 Web Application Fingerprinting Using WhatWeb
+
+WhatWeb was used to identify the technologies associated with the target web application.
+
+The scan identified LiteSpeed as the web server technology.
+
+The initial HTTP request returned a `301 Moved Permanently` response, redirecting traffic to HTTPS.
+
+The HTTPS request returned a `403 Forbidden` response during the WhatWeb scan.
+
+However, the exact LiteSpeed version was not disclosed, preventing reliable identification of version-specific vulnerabilities.
+
+
+### 3.6 WAF Identification Using Wafw00f
+
+Wafw00f was used to determine whether the target was protected by a Web Application Firewall (WAF).
+
+The tool identified a LiteSpeed-associated WAF.
+
+This indicated that an application-layer security mechanism was potentially present.
+
+However, the presence of a WAF did not prevent the SQL injection authentication bypass demonstrated later in the assessment.
+
+
+### 3.7 HTTP Header Inspection Using cURL
+
+cURL was used to inspect the HTTP response headers returned by the target website.
+
+The command used was:
+
+`curl -I https://medirozahospital.com`
+
+The server returned:
+
+`HTTP/2 200`
+
+The response headers also identified:
+
+- **Server:** LiteSpeed
+- **Content-Type:** text/html
+- **Content-Length:** 5445
+- **Accept-Ranges:** bytes
+- **X-Turbo-Charged-By:** LiteSpeed
+
+These findings confirmed the web server technology previously identified through WhatWeb.
+
+No exact LiteSpeed version was disclosed.
+
+![HTTP Header Inspection](screenshots/curl.png)
+
+
+DirBuster was used to identify unlinked directories and potentially exposed application resources.
+
+The enumeration identified several directories returning HTTP 301 redirects.
+
+Further manual inspection revealed two important directories:
+
+**1. `/old/`**
+
+The directory had indexing enabled and exposed a historical SQL database backup:
+
+`mediroza_db_backup_2019.sql`
+
+The backup was accessible without authentication and contained confidential staff and shareholder information.
+
+**2. `/patient/`**
+
+The patient directory also had indexing enabled, revealing resources such as:
+
+- `login.php`
+- `portal.php`
+- `download.php`
+- `logout.php`
+- `reports/`
+- `error_log`
+
+Direct access to the reports directory and error log returned HTTP 403 responses during testing.
+
+However, the directory listing exposed the application's file structure and helped identify the authentication and document download endpoints.
+
+
+### 3.9 Reconnaissance Summary
+
+The reconnaissance phase identified several important characteristics of the target environment.
+
+| Tool | Key Finding |
+|---|---|
+| WHOIS | Domain registration and nameserver information |
+| Nslookup | Target domain resolved to 199.188.201.16 |
+| DNSRecon | DNS records, missing DNSSEC and monitoring-only DMARC policy |
+| Nmap | Exposed network services and hosting infrastructure |
+| WhatWeb | LiteSpeed web server identified |
+| Wafw00f | LiteSpeed-associated WAF detected |
+| cURL | HTTP response headers and server identification |
+| DirBuster | Exposed directory listings and a publicly accessible SQL backup |
+
+The most significant reconnaissance findings were the discovery of the `/old/` database backup and the exposed `/patient/` directory structure.
+
+These discoveries provided the foundation for the subsequent vulnerability assessment, including SQL injection authentication bypass, encrypted PDF recovery and sensitive database information exposure.
+
+Further details of these vulnerabilities and their demonstrated impact are presented in the following section.
+
