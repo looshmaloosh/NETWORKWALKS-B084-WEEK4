@@ -2,9 +2,6 @@
 This project is a black-box penetration test on a target that has given written permission to identify vulnerabilities in their system that can lead to critical data exposure.
 
 
-# NetworkWalks Cybersecurity Internship (B084)
-# Week 4 – Final Penetration Testing Project
-
 **Client:** Mediroza General Hospital  
 **Assessment Type:** Black-Box Penetration Testing & Vulnerability Assessment  
 **Duration:** 5 Days  
