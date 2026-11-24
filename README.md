@@ -537,7 +537,7 @@ Verbose database errors can assist attackers in identifying backend technologies
 Although the error disclosure does not independently demonstrate database compromise, it contributed to the identification of the SQL injection vulnerability.
 
 
-## 5. Risk Rating and Assessment
+## 6. Risk Rating and Assessment
 
 The identified vulnerabilities were assessed based on their demonstrated impact, likelihood of exploitation and potential consequences for confidentiality, integrity and availability.
 
@@ -574,3 +574,85 @@ Several additional observations were identified during reconnaissance but were n
 | WAF | Wafw00f identified a LiteSpeed-associated WAF. | Review WAF rules and monitor suspicious requests; do not rely on a WAF instead of secure coding. |
 
 These observations represent potential security improvements and do not independently establish exploitable vulnerabilities.
+
+
+## 5. Recommendations and Remediation
+
+The following recommendations are proposed to address the vulnerabilities identified during the assessment.
+
+### Priority 1 – Immediate Remediation
+
+#### V01 – SQL Injection Authentication Bypass
+
+**Recommended Actions:**
+
+- Replace unsafe SQL query construction with parameterised queries and prepared statements.
+- Ensure user input is treated as data rather than executable SQL syntax.
+- Apply appropriate server-side input validation.
+- Enforce authentication and authorisation checks for all protected patient resources.
+- Conduct verification testing following remediation.
+
+**Expected Outcome:** Prevent attackers from manipulating SQL queries to bypass authentication.
+
+#### V02 – Publicly Exposed Database Backup
+
+**Recommended Actions:**
+
+- Immediately remove database backups from publicly accessible directories.
+- Store backups securely outside the public web root.
+- Restrict backup access to authorised personnel.
+- Review file permissions and backup retention practices.
+- Examine server access logs for potentially unauthorised downloads.
+- Assess whether incident response procedures are required.
+
+**Expected Outcome:** Prevent unauthorised access to confidential database backups and sensitive organisational information.
+
+### Priority 2 – High-Priority Remediation
+
+#### V04 – Weak PDF Password Protection
+
+**Recommended Actions:**
+
+- Require long, unique and unpredictable passwords for confidential documents.
+- Avoid commonly used passwords and predictable keyboard patterns.
+- Use modern PDF encryption settings.
+- Distribute passwords using secure channels.
+- Consider stronger access-controlled document delivery mechanisms.
+
+**Expected Outcome:** Reduce the likelihood of successful offline password recovery and unauthorised document access.
+
+### Priority 3 – Security Hardening
+
+#### V03 – Directory Indexing
+
+**Recommended Actions:**
+
+- Disable directory indexing on public web directories.
+- Restrict direct access to application logs, backups and sensitive resources.
+- Review public directories for accidentally exposed files.
+- Verify that authentication is enforced for protected resources.
+
+**Expected Outcome:** Reduce unnecessary information disclosure and prevent accidental exposure of internal resources.
+
+#### V05 – Verbose Database Error Disclosure
+
+**Recommended Actions:**
+
+- Disable detailed database error output in production.
+- Display generic authentication and application error messages.
+- Store detailed error information in protected server-side logs.
+- Review error-handling behaviour during security testing.
+
+**Expected Outcome:** Prevent unauthenticated users from obtaining internal database and application information.
+
+### Remediation Priority Summary
+
+| Priority | Finding | Recommended Action |
+|---|---|---|
+| Immediate | V01 – SQL Injection | Implement prepared statements and verify access controls. |
+| Immediate | V02 – Database Backup | Remove exposed backup and secure database storage. |
+| High | V04 – Weak PDF Passwords | Strengthen password requirements and document access controls. |
+| Routine Hardening | V03 – Directory Indexing | Disable directory indexing and verify file permissions. |
+| Routine Hardening | V05 – MySQL Error Disclosure | Suppress detailed errors and implement secure logging. |
+
+
