@@ -333,3 +333,206 @@ These discoveries provided the foundation for the subsequent vulnerability asses
 
 Further details of these vulnerabilities and their demonstrated impact are presented in the following section.
 
+
+## 4. Findings and Proof of Exploitation
+
+### 4.1 Finding V01 – SQL Injection Authentication Bypass
+
+**Severity:** Critical (Provisional)  
+**Affected Component:** Patient Portal Authentication  
+**Affected Endpoint:** `/patient/login.php`  
+**Status:** Confirmed
+
+#### Description
+
+During testing of the patient portal, SQL injection was identified in the authentication mechanism.
+
+Initial testing produced MySQL syntax errors when SQL-specific input was submitted through the username parameter.
+
+Further manual investigation demonstrated that the authentication mechanism could be bypassed without providing a valid account password.
+
+Automated testing using sqlmap did not initially identify the vulnerability, highlighting the importance of manual testing and validation.
+
+#### Proof of Exploitation
+
+Burp Suite was used to inspect the HTTP request and response associated with the successful authentication bypass.
+
+The application returned an HTTP 302 response containing the following redirect:
+
+`Location: portal.php`
+
+Following this redirect, the patient portal displayed three encrypted pathology reports available for download.
+
+This demonstrated that the vulnerability could provide access to protected patient resources without valid credentials.
+
+
+
+#### Impact
+
+Successful exploitation bypassed authentication controls and provided access to confidential patient resources.
+
+This could result in unauthorised access to sensitive medical information and a breach of patient confidentiality.
+
+---
+
+### 4.2 Finding V02 – Publicly Exposed SQL Database Backup
+
+**Severity:** Critical (Provisional)  
+**Affected Component:** Web Server File Storage  
+**Affected Directory:** `/old/`  
+**Status:** Confirmed
+
+#### Description
+
+During directory enumeration, a publicly accessible directory listing was discovered under `/old/`.
+
+The directory contained a historical SQL database backup named `mediroza_db_backup_2019.sql`.
+
+The backup was accessible without authentication and contained database structures and populated records associated with confidential hospital information.
+
+#### Proof of Exposure
+
+The SQL backup contained two particularly sensitive tables.
+
+**Staff Table**
+
+The `staff` table included employee names, job titles, departments, contact details, national identification numbers, monthly salaries and employment dates.
+
+The presence of populated records demonstrated that confidential employee information was exposed.
+
+**Shareholders Table**
+
+The `shareholders` table contained shareholder names, ownership percentages, share quantities and share classifications.
+
+Populated records confirmed the exposure of confidential organisational ownership information.
+
+
+
+#### Impact
+
+Public access to the backup could expose confidential employee and organisational information to unauthorised parties.
+
+Potential consequences include privacy breaches, identity-related risks, social engineering and reputational damage.
+
+---
+
+### 4.3 Finding V03 – Directory Indexing Enabled
+
+**Severity:** Low  
+**Affected Components:** `/old/` and `/patient/`  
+**Status:** Confirmed
+
+#### Description
+
+Directory indexing was enabled on multiple web application directories.
+
+The `/patient/` directory revealed application files including authentication endpoints, a download handler, an error log and a reports directory.
+
+Although direct access to certain sensitive resources returned HTTP 403 responses, the public listing still exposed details of the application's internal file structure.
+
+Directory indexing also contributed to the discovery of the publicly exposed SQL backup.
+
+#### Proof of Exposure
+
+
+
+#### Impact
+
+Directory indexing reveals information about application structure that could assist reconnaissance.
+
+Although directory indexing is not necessarily exploitable by itself, it can increase the likelihood of discovering improperly protected files.
+
+---
+
+### 4.4 Finding V04 – Weak PDF Password Protection
+
+**Severity:** High (Provisional)  
+**Affected Component:** Encrypted Patient PDF Reports  
+**Status:** Confirmed
+
+#### Description
+
+Following the authentication bypass, three encrypted pathology PDF reports were retrieved from the patient portal.
+
+The reports were password protected, requiring additional testing to recover their contents.
+
+Password verification hashes were extracted from the three documents and prepared for dictionary-based password recovery.
+
+#### Hash Extraction and Troubleshooting
+
+Initially, John the Ripper returned `No password hashes loaded`, while Hashcat reported a hash formatting error.
+
+Investigation identified a compatibility issue involving the PDF permissions field.
+
+The extracted hash contained the unsigned value `4294967292`, equivalent to the signed 32-bit value `-4`.
+
+Normalising this field allowed John the Ripper to recognise and process the extracted hashes.
+
+The normalisation changed the representation of the permissions value without intentionally altering the remaining encryption verification data.
+
+
+#### PDF 1 – Password Recovery
+
+The first PDF hash was processed using John the Ripper and the `rockyou.txt` wordlist.
+
+Password recovery was successful.
+
+
+#### PDF 2 – Password Recovery
+
+The second PDF was processed using the same methodology.
+
+John the Ripper successfully recovered the password using the selected wordlist.
+
+
+#### PDF 3 – Password Recovery
+
+The third PDF was processed using the same extraction and recovery method.
+
+The password was successfully recovered, completing the password recovery milestone.
+
+
+#### Results
+
+| Document | Recovery Method | Result |
+|---|---|---|
+| Patient Report 1 | John the Ripper / Dictionary Attack | Successful |
+| Patient Report 2 | John the Ripper / Dictionary Attack | Successful |
+| Patient Report 3 | John the Ripper / Dictionary Attack | Successful |
+
+All three passwords were successfully recovered.
+
+The results demonstrated that password-based document protection can be undermined by weak or predictable passwords.
+
+#### Impact
+
+An attacker who obtains the encrypted documents could potentially recover their passwords through offline guessing and access confidential medical information.
+
+The successful recovery of the documents highlights the importance of using strong and unpredictable passwords alongside secure document access controls.
+
+---
+
+### 4.5 Finding V05 – Verbose MySQL Error Disclosure
+
+**Severity:** Low  
+**Affected Component:** Patient Portal Login  
+**Affected Endpoint:** `/patient/login.php`  
+**Status:** Confirmed
+
+#### Description
+
+During SQL injection testing, the patient login displayed detailed MySQL syntax errors through the PHP `mysqli_query()` function.
+
+The messages revealed internal database error information and fragments of the submitted SQL syntax.
+
+Rather than displaying a generic login failure, the application exposed database diagnostic information to unauthenticated users.
+
+#### Proof of Exposure
+
+
+#### Impact
+
+Verbose database errors can assist attackers in identifying backend technologies, understanding query behaviour and developing more effective attacks.
+
+Although the error disclosure does not independently demonstrate database compromise, it contributed to the identification of the SQL injection vulnerability.
+
