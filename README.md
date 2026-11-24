@@ -84,7 +84,7 @@ The following restrictions applied:
 | sqlmap | Automated SQL injection testing |
 | pdf2john | PDF password hash extraction |
 | John the Ripper | Dictionary-based password recovery |
-| Hashcat | Alternative password-auditing tool |
+
 
 ### 2.4 Reconnaissance
 
