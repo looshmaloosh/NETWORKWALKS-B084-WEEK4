@@ -536,3 +536,41 @@ Verbose database errors can assist attackers in identifying backend technologies
 
 Although the error disclosure does not independently demonstrate database compromise, it contributed to the identification of the SQL injection vulnerability.
 
+
+## 5. Risk Rating and Assessment
+
+The identified vulnerabilities were assessed based on their demonstrated impact, likelihood of exploitation and potential consequences for confidentiality, integrity and availability.
+
+### Risk Rating Summary
+
+| Finding ID | Vulnerability | Severity | Justification |
+|---|---|---|---|
+| V01 | SQL Injection Authentication Bypass | Critical | Authentication bypass was demonstrated, allowing access to protected patient resources. |
+| V02 | Publicly Exposed SQL Backup | Critical | Confidential employee and shareholder records were accessible without authentication. |
+| V03 | Directory Indexing | Low | Revealed internal file structures, although several sensitive resources remained access-controlled. |
+| V04 | Weak PDF Password Protection | High | All three encrypted patient reports were recoverable using dictionary-based password attacks. |
+| V05 | Verbose MySQL Error Disclosure | Low | Exposed database errors and query fragments that could assist further exploitation. |
+
+### Overall Security Risk
+
+**Critical (Provisional)**
+
+The most significant risks arose from the combination of SQL injection authentication bypass and publicly accessible confidential database information.
+
+These findings demonstrated that sensitive patient and organisational information could be exposed through weaknesses in authentication and file storage controls.
+
+The severity classifications are qualitative assessments based on the observed findings rather than formal CVSS calculations.
+
+### Additional Security Observations
+
+Several additional observations were identified during reconnaissance but were not classified as confirmed vulnerabilities.
+
+| Observation | Finding | Recommendation |
+|---|---|---|
+| FTP | Pure-FTPd was exposed and required authentication. TLS support was advertised. | Verify that encrypted authentication is enforced and disable plaintext FTP where possible. |
+| DNSSEC | DNSRecon reported DNSSEC was not configured. | Consider enabling DNSSEC through the DNS provider. |
+| DMARC | The published policy used `p=none`. | Review SPF/DKIM alignment and consider a stronger DMARC enforcement policy. |
+| LiteSpeed | Web server technology identified, but version not confirmed. | Maintain supported software versions and security updates. |
+| WAF | Wafw00f identified a LiteSpeed-associated WAF. | Review WAF rules and monitor suspicious requests; do not rely on a WAF instead of secure coding. |
+
+These observations represent potential security improvements and do not independently establish exploitable vulnerabilities.
