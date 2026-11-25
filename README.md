@@ -643,7 +643,6 @@ The ratings should not be interpreted as officially assigned CVSS scores.
 
 CVSS Base Scores describe technical vulnerability severity and do not independently determine overall organisational risk or remediation priority.
 
-**Reference:** [FIRST CVSS v3.1 Calculator](https://www.first.org/cvss/calculator/3-1)
 
 ### Overall Security Risk
 
@@ -786,6 +785,7 @@ Overall, the project strengthened my understanding of penetration testing method
 - [PortSwigger Web Security Academy](https://portswigger.net/web-security)
 - [Nmap Documentation](https://nmap.org/book/man.html)
 - [John the Ripper](https://www.openwall.com/john/)
+- [FIRST CVSS v3.1 Calculator](https://www.first.org/cvss/calculator/3-1)
 
 ---
 
