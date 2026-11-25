@@ -653,7 +653,7 @@ The assessment identified high-risk weaknesses affecting patient authentication 
 
 These findings demonstrated that sensitive patient and organisational information could be exposed through weaknesses in authentication and file storage controls.
 
-The severity classifications are qualitative assessments based on the observed findings rather than formal CVSS calculations.
+The individual vulnerability severity ratings are based on provisional CVSS v3.1 Base Scores, while the overall security risk rating reflects the combined potential impact of the identified vulnerabilities on the organisation.
 
 ### Additional Security Observations
 
