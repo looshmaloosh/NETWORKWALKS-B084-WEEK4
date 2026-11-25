@@ -13,9 +13,7 @@ This project is a black-box penetration test on a target that has given written 
 ## 1. Executive Summary
 
 This report documents the final penetration testing assessment conducted as part of the NetworkWalks Cybersecurity Internship Program (B084).
-
 The objective was to evaluate the security of the Mediroza General Hospital web application, identify vulnerabilities, demonstrate their potential impact and recommend appropriate remediation measures.
-
 The assessment involved network reconnaissance, directory enumeration, web application testing, SQL injection exploitation, PDF password recovery and sensitive information exposure analysis.
 
 ### Key Findings
@@ -35,9 +33,7 @@ The most significant findings were the authentication bypass and exposed SQL dat
 **Overall Risk: High**
 
 The combination of authentication weaknesses and sensitive information exposure presents a significant confidentiality risk.
-
 Successful exploitation demonstrated unauthorised access to patient report resources and exposure of confidential employee and organisational information.
-
 Immediate remediation of the authentication vulnerability and publicly exposed database backup is recommended.
 
 ---
@@ -47,9 +43,7 @@ Immediate remediation of the authentication vulnerability and publicly exposed d
 ### 2.1 Scope of Assessment
 
 The engagement involved an authorised black-box penetration test against the Mediroza General Hospital web application.
-
 Testing was conducted without access to the application's source code, internal architecture or administrator credentials.
-
 The assessment consisted of four milestones:
 
 | Milestone | Objective | Result |
@@ -92,7 +86,6 @@ The following restrictions applied:
 ## 3. Reconnaissance and Enumeration
 
 Reconnaissance was conducted to identify publicly available information, exposed network services, web technologies and potentially accessible application resources associated with Mediroza General Hospital.
-
 Both passive and active reconnaissance techniques were used to understand the target's external attack surface before conducting vulnerability testing.
 
 ### 3.1 WHOIS Enumeration
@@ -185,21 +178,15 @@ Although multiple services were exposed, their presence did not independently es
 *Figure 4: Nmap service and version detection results.*
 
 Further inspection of the FTP service identified Pure-FTPd with anonymous authentication disabled and TLS support advertised.
-
 A separate MySQL service check reported TCP port 3306 as filtered, preventing direct database version identification.
-
 These results were recorded as reconnaissance observations rather than confirmed vulnerabilities.
 
 ### 3.5 Web Application Fingerprinting Using WhatWeb
 
 WhatWeb was used to identify the technologies associated with the target web application.
-
 The scan identified LiteSpeed as the web server technology.
-
 The initial HTTP request returned a `301 Moved Permanently` response, redirecting traffic to HTTPS.
-
 The HTTPS request returned a `403 Forbidden` response during the WhatWeb scan.
-
 However, the exact LiteSpeed version was not disclosed, preventing reliable identification of version-specific vulnerabilities.
 
 <p align="center"><img src="screenshots/whatweb.jpeg" alt="WhatWeb Results"></p>
@@ -209,11 +196,8 @@ However, the exact LiteSpeed version was not disclosed, preventing reliable iden
 ### 3.6 WAF Identification Using Wafw00f
 
 Wafw00f was used to determine whether the target was protected by a Web Application Firewall (WAF).
-
 The tool identified a LiteSpeed-associated WAF.
-
 This indicated that an application-layer security mechanism was potentially present.
-
 However, the presence of a WAF did not prevent the SQL injection authentication bypass demonstrated later in the assessment.
 
 <p align="center"><img src="screenshots/wafw00f.jpeg" alt="Wafw00f Results"></p>
@@ -241,7 +225,6 @@ The response headers also identified:
 - **X-Turbo-Charged-By:** LiteSpeed
 
 These findings confirmed the web server technology previously identified through WhatWeb.
-
 No exact LiteSpeed version was disclosed.
 
 <p align="center"><img src="screenshots/curl.jpeg" alt="HTTP Header Inspection"></p>
@@ -251,7 +234,6 @@ No exact LiteSpeed version was disclosed.
 ### 3.8 Directory Enumeration Using DirBuster
 
 DirBuster was used to identify unlinked directories and potentially exposed application resources.
-
 The enumeration identified several directories returning HTTP 301 redirects.
 
 <p align="center"><img src="screenshots/dirbuster.jpeg" alt="HTTP Header Inspection"></p>
@@ -280,7 +262,6 @@ The patient directory also had indexing enabled, revealing resources such as:
 - `error_log`
 
 Direct access to the reports directory and error log returned HTTP 403 responses during testing.
-
 However, the directory listing exposed the application's file structure and helped identify the authentication and document download endpoints.
 
 <p align="center"><img src="screenshots/exposedbackup.jpeg" alt="Exposed Old Directory"></p>
@@ -307,9 +288,7 @@ The reconnaissance phase identified several important characteristics of the tar
 | DirBuster | Exposed directory listings and a publicly accessible SQL backup |
 
 The most significant reconnaissance findings were the discovery of the `/old/` database backup and the exposed `/patient/` directory structure.
-
 These discoveries provided the foundation for the subsequent vulnerability assessment, including SQL injection authentication bypass, encrypted PDF recovery and sensitive database information exposure.
-
 Further details of these vulnerabilities and their demonstrated impact are presented in the following section.
 
 ---
@@ -326,23 +305,18 @@ Further details of these vulnerabilities and their demonstrated impact are prese
 #### Description
 
 During testing of the patient portal, SQL injection was identified in the authentication mechanism.
-
 Initial testing produced MySQL syntax errors when SQL-specific input was submitted through the username parameter.
-
 Further manual investigation demonstrated that the authentication mechanism could be bypassed without providing a valid account password.
-
 Automated testing using sqlmap did not initially identify the vulnerability, highlighting the importance of manual testing and validation.
 
 #### Proof of Exploitation
 
 Burp Suite was used to inspect the HTTP request and response associated with the successful authentication bypass.
-
 The application returned an HTTP 302 response containing the following redirect:
 
 `Location: portal.php`
 
 Following this redirect, the patient portal displayed three encrypted pathology reports available for download.
-
 This demonstrated that the vulnerability could provide access to protected patient resources without valid credentials.
 
 <p align="center"><img src="screenshots/sqliburp.png" alt="SQL Injection Authentication Bypass"></p>
@@ -358,7 +332,6 @@ This demonstrated that the vulnerability could provide access to protected patie
 #### Impact
 
 Successful exploitation bypassed authentication controls and provided access to confidential patient resources.
-
 This could result in unauthorised access to sensitive medical information and a breach of patient confidentiality.
 
 ---
@@ -373,9 +346,7 @@ This could result in unauthorised access to sensitive medical information and a 
 #### Description
 
 During directory enumeration, a publicly accessible directory listing was discovered under `/old/`.
-
 The directory contained a historical SQL database backup named `mediroza_db_backup_2019.sql`.
-
 The backup was accessible without authentication and contained database structures and populated records associated with confidential hospital information.
 
 #### Proof of Exposure
@@ -385,13 +356,11 @@ The SQL backup contained two particularly sensitive tables.
 **Staff Table**
 
 The `staff` table included employee names, job titles, departments, contact details, national identification numbers, monthly salaries and employment dates.
-
 The presence of populated records demonstrated that confidential employee information was exposed.
 
 **Shareholders Table**
 
 The `shareholders` table contained shareholder names, ownership percentages, share quantities and share classifications.
-
 Populated records confirmed the exposure of confidential organisational ownership information.
 
 <p align="center"><img src="screenshots/exposedbackup.jpeg" alt="Exposed Database Backup"></p>
@@ -409,7 +378,6 @@ Populated records confirmed the exposure of confidential organisational ownershi
 #### Impact
 
 Public access to the backup could expose confidential employee and organisational information to unauthorised parties.
-
 Potential consequences include privacy breaches, identity-related risks, social engineering and reputational damage.
 
 ---
@@ -423,11 +391,8 @@ Potential consequences include privacy breaches, identity-related risks, social 
 #### Description
 
 Directory indexing was enabled on multiple web application directories.
-
 The `/patient/` directory revealed application files including authentication endpoints, a download handler, an error log and a reports directory.
-
 Although direct access to certain sensitive resources returned HTTP 403 responses, the public listing still exposed details of the application's internal file structure.
-
 Directory indexing also contributed to the discovery of the publicly exposed SQL backup.
 
 #### Proof of Exposure
@@ -453,21 +418,15 @@ Although directory indexing is not necessarily exploitable by itself, it can inc
 #### Description
 
 Following the authentication bypass, three encrypted pathology PDF reports were retrieved from the patient portal.
-
 The reports were password protected, requiring additional testing to recover their contents.
-
 Password verification hashes were extracted from the three documents and prepared for dictionary-based password recovery.
 
 #### Hash Extraction and Troubleshooting
 
 Initially, John the Ripper returned `No password hashes loaded`, while Hashcat reported a hash formatting error.
-
 Investigation identified a compatibility issue involving the PDF permissions field.
-
 The extracted hash contained the unsigned value `4294967292`, equivalent to the signed 32-bit value `-4`.
-
 Normalising this field and replacing the values in this field using `SED` allowed John the Ripper to recognise and process the extracted hashes.
-
 The normalisation changed the representation of the permissions value without intentionally altering the remaining encryption verification data.
 
 <p align="center"><img src="screenshots/pdfhashing.jpeg" alt="Extracted PDF Hashes"></p>
@@ -536,7 +495,6 @@ Each recovered password was able to successfully unlock each confidential pdf.
 #### Impact
 
 An attacker who obtains the encrypted documents could potentially recover their passwords through offline guessing and access confidential medical information.
-
 The successful recovery of the documents highlights the importance of using strong and unpredictable passwords alongside secure document access controls.
 
 ---
@@ -551,9 +509,7 @@ The successful recovery of the documents highlights the importance of using stro
 #### Description
 
 During SQL injection testing, the patient login displayed detailed MySQL syntax errors through the PHP `mysqli_query()` function.
-
 The messages revealed internal database error information and fragments of the submitted SQL syntax.
-
 Rather than displaying a generic login failure, the application exposed database diagnostic information to unauthenticated users.
 
 #### Proof of Exposure
@@ -565,7 +521,6 @@ Rather than displaying a generic login failure, the application exposed database
 #### Impact
 
 Verbose database errors can assist attackers in identifying backend technologies, understanding query behaviour and developing more effective attacks.
-
 Although the error disclosure does not independently demonstrate database compromise, it contributed to the identification of the SQL injection vulnerability.
 
 ---
@@ -588,7 +543,6 @@ The identified vulnerabilities were assessed based on their demonstrated impact,
 ### CVSS v3.1 Assessment
 
 The identified vulnerabilities were assigned provisional CVSS v3.1 Base Scores using the Common Vulnerability Scoring System maintained by FIRST.
-
 The scores consider attack vector, attack complexity, privileges required, user interaction, scope and potential impacts on confidentiality, integrity and availability.
 
 #### CVSS Vector Strings
@@ -636,11 +590,8 @@ Database error messages were exposed to unauthenticated users, revealing informa
 ### Scoring Limitations
 
 These scores represent provisional CVSS v3.1 Base Score assessments based on observed testing results.
-
 Some scoring assumptions, particularly potential integrity impact from authentication bypass and the attack vector for offline PDF password recovery, require further validation.
-
 The ratings should not be interpreted as officially assigned CVSS scores.
-
 CVSS Base Scores describe technical vulnerability severity and do not independently determine overall organisational risk or remediation priority.
 
 
@@ -649,9 +600,7 @@ CVSS Base Scores describe technical vulnerability severity and do not independen
 **High**
 
 The assessment identified high-risk weaknesses affecting patient authentication and sensitive information storage. Individual findings have been assigned provisional severity ratings based on their demonstrated impact.
-
 These findings demonstrated that sensitive patient and organisational information could be exposed through weaknesses in authentication and file storage controls.
-
 The individual vulnerability severity ratings are based on provisional CVSS v3.1 Base Scores, while the overall security risk rating reflects the combined potential impact of the identified vulnerabilities on the organisation.
 
 ### Additional Security Observations
