@@ -466,7 +466,7 @@ Investigation identified a compatibility issue involving the PDF permissions fie
 
 The extracted hash contained the unsigned value `4294967292`, equivalent to the signed 32-bit value `-4`.
 
-Normalising this field allowed John the Ripper to recognise and process the extracted hashes.
+Normalising this field and replacing the values in this field using `SED` allowed John the Ripper to recognise and process the extracted hashes.
 
 The normalisation changed the representation of the permissions value without intentionally altering the remaining encryption verification data.
 
