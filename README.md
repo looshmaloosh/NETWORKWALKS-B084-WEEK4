@@ -754,15 +754,10 @@ The following recommendations are proposed to address the vulnerabilities identi
 ## 7. Conclusion
 
 The NetworkWalks Week 4 final project provided practical experience conducting an authorised black-box penetration test against a web application.
-
 The assessment successfully demonstrated an SQL injection authentication bypass, recovery of three encrypted pathology reports and exposure of confidential employee and shareholder information through a publicly accessible database backup.
-
 Additional weaknesses involving directory indexing and verbose database error disclosure were also identified.
-
 The assessment highlighted the importance of secure authentication, strong password protection, appropriate access controls and secure storage of sensitive information.
-
 It also demonstrated the value of manual vulnerability testing, particularly when automated tools fail to identify application-specific weaknesses.
-
 Overall, the project strengthened my understanding of penetration testing methodology, vulnerability analysis, troubleshooting, risk assessment and professional security reporting.
 
 ---
