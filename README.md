@@ -584,6 +584,75 @@ The identified vulnerabilities were assessed based on their demonstrated impact,
 | V04 | Weak PDF Password Protection | High | All three encrypted patient reports were recoverable using dictionary-based password attacks. |
 | V05 | Verbose MySQL Error Disclosure | Low | Exposed database errors and query fragments that could assist further exploitation. |
 
+
+### CVSS v3.1 Assessment
+
+The identified vulnerabilities were assigned provisional CVSS v3.1 Base Scores using the Common Vulnerability Scoring System maintained by FIRST.
+
+The scores consider attack vector, attack complexity, privileges required, user interaction, scope and potential impacts on confidentiality, integrity and availability.
+
+| Finding ID | Vulnerability | CVSS v3.1 Score | Severity |
+|---|---|---|---|
+| V01 | SQL Injection Authentication Bypass | 8.2 | High |
+| V02 | Publicly Exposed SQL Database Backup | 7.5 | High |
+| V03 | Directory Indexing Enabled | 5.3 | Medium |
+| V04 | Weak PDF Password Protection | 6.2 | Medium |
+| V05 | Verbose MySQL Error Disclosure | 5.3 | Medium |
+
+#### CVSS Vector Strings
+
+**V01 - SQL Injection Authentication Bypass**
+
+`CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N`
+
+**Score: 8.2 (High)**
+
+The vulnerability was exploitable remotely without prior authentication or user interaction. It demonstrated significant confidentiality impact through unauthorised access to patient resources, with limited integrity impact assumed from the authentication bypass.
+
+**V02 - Publicly Exposed Database Backup**
+
+`CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N`
+
+**Score: 7.5 (High)**
+
+The SQL backup was publicly accessible without authentication. Its contents included confidential employee and shareholder information, resulting in high confidentiality impact.
+
+**V03 - Directory Indexing Enabled**
+
+`CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N`
+
+**Score: 5.3 (Medium)**
+
+Directory listings exposed application filenames and internal directory structures. The information disclosure was limited, with no independently demonstrated impact on integrity or availability.
+
+**V04 - Weak PDF Password Protection**
+
+`CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N`
+
+**Score: 6.2 (Medium)**
+
+All three encrypted PDF reports were successfully recovered through dictionary-based password testing. This assessment considers an attacker who has already obtained copies of the encrypted files and can conduct offline password recovery.
+
+**V05 - Verbose MySQL Error Disclosure**
+
+`CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N`
+
+**Score: 5.3 (Medium)**
+
+Database error messages were exposed to unauthenticated users, revealing information about query behaviour and backend implementation. The demonstrated impact was limited to information disclosure.
+
+### Scoring Limitations
+
+These scores represent provisional CVSS v3.1 Base Score assessments based on observed testing results.
+
+Some scoring assumptions, particularly potential integrity impact from authentication bypass and the attack vector for offline PDF password recovery, require further validation.
+
+The ratings should not be interpreted as officially assigned CVSS scores.
+
+CVSS Base Scores describe technical vulnerability severity and do not independently determine overall organisational risk or remediation priority.
+
+**Reference:** [FIRST CVSS v3.1 Calculator](https://www.first.org/cvss/calculator/3-1)
+
 ### Overall Security Risk
 
 **High**
