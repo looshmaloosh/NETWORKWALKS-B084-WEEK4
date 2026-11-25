@@ -314,7 +314,7 @@ Further details of these vulnerabilities and their demonstrated impact are prese
 
 ## 4. Findings and Proof of Exploitation
 
-### 4.1 Finding V01 – SQL Injection Authentication Bypass
+### 4.1 Finding V01 - SQL Injection Authentication Bypass
 
 **Severity:** Critical (Provisional)  
 **Affected Component:** Patient Portal Authentication  
@@ -442,7 +442,7 @@ Although directory indexing is not necessarily exploitable by itself, it can inc
 
 ---
 
-### 4.4 Finding V04 – Weak PDF Password Protection
+### 4.4 Finding V04 - Weak PDF Password Protection
 
 **Severity:** High (Provisional)  
 **Affected Component:** Encrypted Patient PDF Reports  
@@ -474,7 +474,7 @@ The normalisation changed the representation of the permissions value without in
 
 *Figure 16: Extracted password verification hashes from the three encrypted PDF documents.*
 
-#### PDF 1 – Password Recovery
+#### PDF 1 - Password Recovery
 
 The first PDF hash was processed using John the Ripper and the `rockyou.txt` wordlist.
 
@@ -488,7 +488,7 @@ Password recovery was successful.
 
 *Figure 18: Successful password recovery for PDF 1 using John the Ripper.
 
-#### PDF 2 – Password Recovery
+#### PDF 2 - Password Recovery
 
 The second PDF was processed using the same methodology.
 
@@ -502,7 +502,7 @@ John the Ripper successfully recovered the password using the selected wordlist.
 
 *Figure 20: Successful password recovery for PDF 2.*
 
-#### PDF 3 – Password Recovery
+#### PDF 3 - Password Recovery
 
 The third PDF was processed using the same extraction and recovery method.
 
@@ -613,9 +613,9 @@ These observations represent potential security improvements and do not independ
 
 The following recommendations are proposed to address the vulnerabilities identified during the assessment.
 
-### Priority 1 – Immediate Remediation
+### Priority 1 - Immediate Remediation
 
-#### V01 – SQL Injection Authentication Bypass
+#### V01 - SQL Injection Authentication Bypass
 
 **Recommended Actions:**
 
@@ -627,7 +627,7 @@ The following recommendations are proposed to address the vulnerabilities identi
 
 **Expected Outcome:** Prevent attackers from manipulating SQL queries to bypass authentication.
 
-#### V02 – Publicly Exposed Database Backup
+#### V02 - Publicly Exposed Database Backup
 
 **Recommended Actions:**
 
@@ -640,9 +640,9 @@ The following recommendations are proposed to address the vulnerabilities identi
 
 **Expected Outcome:** Prevent unauthorised access to confidential database backups and sensitive organisational information.
 
-### Priority 2 – High-Priority Remediation
+### Priority 2 - High-Priority Remediation
 
-#### V04 – Weak PDF Password Protection
+#### V04 - Weak PDF Password Protection
 
 **Recommended Actions:**
 
@@ -654,7 +654,7 @@ The following recommendations are proposed to address the vulnerabilities identi
 
 **Expected Outcome:** Reduce the likelihood of successful offline password recovery and unauthorised document access.
 
-### Priority 3 – Security Hardening
+### Priority 3 - Security Hardening
 
 #### V03 – Directory Indexing
 
@@ -667,7 +667,7 @@ The following recommendations are proposed to address the vulnerabilities identi
 
 **Expected Outcome:** Reduce unnecessary information disclosure and prevent accidental exposure of internal resources.
 
-#### V05 – Verbose Database Error Disclosure
+#### V05 - Verbose Database Error Disclosure
 
 **Recommended Actions:**
 
@@ -682,11 +682,11 @@ The following recommendations are proposed to address the vulnerabilities identi
 
 | Priority | Finding | Recommended Action |
 |---|---|---|
-| Immediate | V01 – SQL Injection | Implement prepared statements and verify access controls. |
-| Immediate | V02 – Database Backup | Remove exposed backup and secure database storage. |
-| High | V04 – Weak PDF Passwords | Strengthen password requirements and document access controls. |
-| Routine Hardening | V03 – Directory Indexing | Disable directory indexing and verify file permissions. |
-| Routine Hardening | V05 – MySQL Error Disclosure | Suppress detailed errors and implement secure logging. |
+| Immediate | V01 - SQL Injection | Implement prepared statements and verify access controls. |
+| Immediate | V02 - Database Backup | Remove exposed backup and secure database storage. |
+| High | V04 - Weak PDF Passwords | Strengthen password requirements and document access controls. |
+| Medium | V03 - Directory Indexing | Disable directory indexing and verify file permissions. |
+| Low | V05 - MySQL Error Disclosure | Suppress detailed errors and implement secure logging. |
 
 ---
 
@@ -730,10 +730,10 @@ Overall, the project strengthened my understanding of penetration testing method
 ## Author Information
 
 **Ali Fares**  
-Cybersecurity Intern – NetworkWalks B084  
-Bachelor of Cybersecurity – University of Technology Sydney (UTS)
+Cybersecurity Intern - NetworkWalks B084  
+Bachelor of Cybersecurity - University of Technology Sydney (UTS)
 
-**Project:** Week 4 – Final Penetration Testing Project  
+**Project:** Week 4 - Final Penetration Testing Project  
 **Assessment Type:** Authorised Black-Box Penetration Test
 
 **Disclaimer:** All testing was conducted as part of an authorised educational penetration testing engagement. Public evidence has been sanitised to protect confidential information.
