@@ -529,8 +529,7 @@ Each recovered password was able to successfully unlock each confidential pdf.
 
 <p align="center"><img src="screenshots/patientreportredacted.png" alt="Example of a exposed patient report"></p>
 
-*Figure 23: Patient login revealing detailed MySQL syntax errors.*
-The results demonstrated that password-based document protection can be undermined by weak or predictable passwords.
+*Figure 23: Example of a successfully decrypted patient pathology report, with confidential information redacted.* 
 
 #### Impact
 
@@ -585,9 +584,9 @@ The identified vulnerabilities were assessed based on their demonstrated impact,
 
 ### Overall Security Risk
 
-**Critical (Provisional)**
+**High**
 
-The most significant risks arose from the combination of SQL injection authentication bypass and publicly accessible confidential database information.
+The assessment identified high-risk weaknesses affecting patient authentication and sensitive information storage. Individual findings have been assigned provisional severity ratings based on their demonstrated impact.
 
 These findings demonstrated that sensitive patient and organisational information could be exposed through weaknesses in authentication and file storage controls.
 
