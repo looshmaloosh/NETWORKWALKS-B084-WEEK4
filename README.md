@@ -278,7 +278,7 @@ Direct access to the reports directory and error log returned HTTP 403 responses
 
 However, the directory listing exposed the application's file structure and helped identify the authentication and document download endpoints.
 
-![Exposed Old Directory](screenshots/[exposedbackup.jpeg)
+![Exposed Old Directory](screenshots/exposedbackup.jpeg)
 
 *Figure 9: Public directory listing exposing a historical SQL database backup.*
 
