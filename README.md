@@ -318,7 +318,7 @@ Further details of these vulnerabilities and their demonstrated impact are prese
 
 ### 4.1 Finding V01 - SQL Injection Authentication Bypass
 
-**Severity:** Critical (Provisional)  
+**Severity:** High (CVSS 8.2)  
 **Affected Component:** Patient Portal Authentication  
 **Affected Endpoint:** `/patient/login.php`  
 **Status:** Confirmed
@@ -365,7 +365,7 @@ This could result in unauthorised access to sensitive medical information and a 
 
 ### 4.2 Finding V02 - Publicly Exposed SQL Database Backup
 
-**Severity:** Critical (Provisional)  
+**Severity:** High (CVSS 7.5)
 **Affected Component:** Web Server File Storage  
 **Affected Directory:** `/old/`  
 **Status:** Confirmed
@@ -416,7 +416,7 @@ Potential consequences include privacy breaches, identity-related risks, social 
 
 ### 4.3 Finding V03 – Directory Indexing Enabled
 
-**Severity:** Low  
+**Severity:** Medium (CVSS 5.3)
 **Affected Components:** `/old/` and `/patient/`  
 **Status:** Confirmed
 
@@ -446,7 +446,7 @@ Although directory indexing is not necessarily exploitable by itself, it can inc
 
 ### 4.4 Finding V04 - Weak PDF Password Protection
 
-**Severity:** High (Provisional)  
+**Severity:** Medium (CVSS 6.2)
 **Affected Component:** Encrypted Patient PDF Reports  
 **Status:** Confirmed
 
@@ -543,7 +543,7 @@ The successful recovery of the documents highlights the importance of using stro
 
 ### 4.5 Finding V05 – Verbose MySQL Error Disclosure
 
-**Severity:** Low  
+**Severity:** Medium (CVSS 5.3)
 **Affected Component:** Patient Portal Login  
 **Affected Endpoint:** `/patient/login.php`  
 **Status:** Confirmed
@@ -576,13 +576,13 @@ The identified vulnerabilities were assessed based on their demonstrated impact,
 
 ### Risk Rating Summary
 
-| Finding ID | Vulnerability | Severity | Justification |
-|---|---|---|---|
-| V01 | SQL Injection Authentication Bypass | Critical | Authentication bypass was demonstrated, allowing access to protected patient resources. |
-| V02 | Publicly Exposed SQL Backup | Critical | Confidential employee and shareholder records were accessible without authentication. |
-| V03 | Directory Indexing | Low | Revealed internal file structures, although several sensitive resources remained access-controlled. |
-| V04 | Weak PDF Password Protection | High | All three encrypted patient reports were recoverable using dictionary-based password attacks. |
-| V05 | Verbose MySQL Error Disclosure | Low | Exposed database errors and query fragments that could assist further exploitation. |
+| Finding ID | Vulnerability | CVSS v3.1 | Severity | Justification |
+|---|---|---|---|---|
+| V01 | SQL Injection Authentication Bypass | 8.2 | High | Authentication bypass allowed access to protected patient resources. |
+| V02 | Publicly Exposed SQL Backup | 7.5 | High | Confidential employee and shareholder records were accessible without authentication. |
+| V03 | Directory Indexing | 5.3 | Medium | Internal application directories and filenames were exposed. |
+| V04 | Weak PDF Password Protection | 6.2 | Medium | All three encrypted patient reports were recovered using dictionary-based password attacks. |
+| V05 | Verbose MySQL Error Disclosure | 5.3 | Medium | Database error messages revealed internal application information. |
 
 
 ### CVSS v3.1 Assessment
@@ -590,14 +590,6 @@ The identified vulnerabilities were assessed based on their demonstrated impact,
 The identified vulnerabilities were assigned provisional CVSS v3.1 Base Scores using the Common Vulnerability Scoring System maintained by FIRST.
 
 The scores consider attack vector, attack complexity, privileges required, user interaction, scope and potential impacts on confidentiality, integrity and availability.
-
-| Finding ID | Vulnerability | CVSS v3.1 Score | Severity |
-|---|---|---|---|
-| V01 | SQL Injection Authentication Bypass | 8.2 | High |
-| V02 | Publicly Exposed SQL Database Backup | 7.5 | High |
-| V03 | Directory Indexing Enabled | 5.3 | Medium |
-| V04 | Weak PDF Password Protection | 6.2 | Medium |
-| V05 | Verbose MySQL Error Disclosure | 5.3 | Medium |
 
 #### CVSS Vector Strings
 
