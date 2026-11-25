@@ -521,6 +521,11 @@ The password was successfully recovered, completing the password recovery milest
 
 All three passwords were successfully recovered.
 
+Each recovered password was able to successfully unlock each confidential pdf.
+
+![Example of a exposed patient report](screenshots/patientreportredacted.png)
+
+*Figure 23: Patient login revealing detailed MySQL syntax errors.*
 The results demonstrated that password-based document protection can be undermined by weak or predictable passwords.
 
 #### Impact
@@ -548,6 +553,9 @@ Rather than displaying a generic login failure, the application exposed database
 
 #### Proof of Exposure
 
+![MySQL Error Disclosure](screenshots/MYSQLERROR.png)
+
+*Figure 24: Patient login revealing detailed MySQL syntax errors.*
 
 #### Impact
 
