@@ -86,62 +86,6 @@ The following restrictions applied:
 | John the Ripper | Dictionary-based password recovery |
 
 
-### 2.4 Reconnaissance
-
-#### Domain and DNS Enumeration
-
-WHOIS and Nslookup were used to identify domain registration information, hosting infrastructure and the target's resolved IP address.
-
-DNSRecon revealed publicly available DNS records, including A, NS, MX, TXT and SRV records.
-
-The scan also reported that DNSSEC was not configured and that the domain's DMARC policy was set to `p=none`.
-
-These observations were documented as security hardening opportunities rather than confirmed exploitable vulnerabilities.
-
-
-#### Network Service Enumeration
-
-Nmap was used to identify exposed network services associated with the target's resolved IP address.
-
-The scan identified FTP, SMTP, DNS, HTTP, HTTPS, POP3 and IMAP services.
-
-Service fingerprinting identified technologies including Pure-FTPd, Exim, Dovecot, HAProxy and LiteSpeed.
-
-The server appeared to use shared hosting infrastructure, so these findings were treated as infrastructure observations rather than proof of vulnerabilities belonging exclusively to the hospital.
-
-#### Web Application Fingerprinting
-
-WhatWeb and cURL identified LiteSpeed as the web server technology.
-
-Wafw00f also identified a LiteSpeed-associated Web Application Firewall.
-
-Although the web server technology was identified, the exact LiteSpeed version was not disclosed, preventing confirmation of version-specific vulnerabilities.
-
-
-#### Directory Enumeration
-
-Directory enumeration was conducted to identify unlinked resources and potentially exposed application directories.
-
-Two notable directories were discovered:
-
-- `/patient/` – Exposed internal application filenames and directory structure.
-- `/old/` – Contained a publicly accessible SQL database backup.
-
-The findings indicated that directory indexing was enabled and that sensitive files were not consistently protected from public access.
-
-These discoveries were investigated further during the exploitation and data exposure milestones.
-
-### 2.5 Testing Limitations
-
-The assessment was conducted externally without access to the application's source code or internal database administration.
-
-Some automated tools, including sqlmap, did not successfully identify vulnerabilities later demonstrated through manual testing.
-
-The engagement excluded denial-of-service testing, social engineering and activities outside the authorised domain.
-
-Consequently, the findings represent vulnerabilities demonstrated within the permitted testing scope rather than a complete assessment of all underlying hosting infrastructure.
-
-
 ## 3. Reconnaissance and Enumeration
 
 Reconnaissance was conducted to identify publicly available information, exposed network services, web technologies and potentially accessible application resources associated with Mediroza General Hospital.
@@ -686,7 +630,6 @@ Overall, the project strengthened my understanding of penetration testing method
 - [PortSwigger Web Security Academy](https://portswigger.net/web-security)
 - [Nmap Documentation](https://nmap.org/book/man.html)
 - [John the Ripper](https://www.openwall.com/john/)
-- [Hashcat](https://hashcat.net/hashcat/)
 
 ---
 
@@ -698,8 +641,6 @@ Bachelor of Cybersecurity – University of Technology Sydney (UTS)
 
 **Project:** Week 4 – Final Penetration Testing Project  
 **Assessment Type:** Authorised Black-Box Penetration Test
-
-**GitHub:** [looshmaloosh](https://github.com/looshmaloosh)
 
 **Disclaimer:** All testing was conducted as part of an authorised educational penetration testing engagement. Public evidence has been sanitised to protect confidential information.
 
