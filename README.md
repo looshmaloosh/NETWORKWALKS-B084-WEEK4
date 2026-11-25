@@ -111,7 +111,7 @@ The enumeration identified the following:
 
 The results provided background information about the domain's registration and DNS infrastructure.
 
-![WHOIS Enumeration](screenshots/Whois.jpeg)
+<p align="center"><img src="screenshots/Whois.jpeg" alt="WHOIS Enumeration"></p>
 
 *Figure 1: WHOIS enumeration identifying domain registration details.*
 
@@ -125,7 +125,7 @@ The domain resolved to:
 
 This information was used during subsequent network reconnaissance.
 
-![Nslookup Results](screenshots/nslookup.jpeg)
+<p align="center"><img src="screenshots/nslookup.jpeg" alt="Nslookup Results"></p>
 
 *Figure 2: Nslookup identifying the target's resolved IPv4 address.*
 
@@ -149,7 +149,7 @@ Two notable security observations were identified:
 
 These observations were documented as potential security hardening opportunities rather than confirmed exploitable vulnerabilities.
 
-![DNSRecon Results](screenshots/dnsrecon.jpeg)
+<p align="center"><img src="screenshots/dnsrecon.jpeg" alt="DNSRecon Results"></p>
 
 *Figure 3: DNSRecon enumeration of the domain's DNS records.*
 ### 3.4 Network Enumeration Using Nmap
@@ -180,7 +180,7 @@ The scan also identified the hostname `server274-1.web-hosting.com`, suggesting 
 
 Although multiple services were exposed, their presence did not independently establish exploitable vulnerabilities.
 
-![Nmap Service Enumeration](screenshots/nmap.jpeg)
+<p align="center"><img src="screenshots/nmap.jpeg" alt="Nmap Service Enumeration"></p>
 
 *Figure 4: Nmap service and version detection results.*
 
@@ -202,7 +202,7 @@ The HTTPS request returned a `403 Forbidden` response during the WhatWeb scan.
 
 However, the exact LiteSpeed version was not disclosed, preventing reliable identification of version-specific vulnerabilities.
 
-![WhatWeb Results](screenshots/whatweb.jpeg)
+<p align="center"><img src="screenshots/whatweb.jpeg" alt="WhatWeb Results"></p>
 
 *Figure 5: Web server fingerprinting using WhatWeb.*
 
@@ -216,7 +216,7 @@ This indicated that an application-layer security mechanism was potentially pres
 
 However, the presence of a WAF did not prevent the SQL injection authentication bypass demonstrated later in the assessment.
 
-![Wafw00f Results](screenshots/wafw00f.jpeg)
+<p align="center"><img src="screenshots/wafw00f.jpeg" alt="Wafw00f Results"></p>
 
 *Figure 6: Wafw00f identifying a LiteSpeed-associated Web Application Firewall.*
 
@@ -244,7 +244,7 @@ These findings confirmed the web server technology previously identified through
 
 No exact LiteSpeed version was disclosed.
 
-![HTTP Header Inspection](screenshots/curl.jpeg)
+<p align="center"><img src="screenshots/curl.jpeg" alt="HTTP Header Inspection"></p>
 
 *Figure 7: HTTP response headers obtained using cURL.*
 
@@ -252,7 +252,7 @@ DirBuster was used to identify unlinked directories and potentially exposed appl
 
 The enumeration identified several directories returning HTTP 301 redirects.
 
-![HTTP Header Inspection](screenshots/dirbuster.jpeg)
+<p align="center"><img src="screenshots/dirbuster.jpeg" alt="HTTP Header Inspection"></p>
 
 *Figure 8: Dirbuster identifying potential directories to explore.*
 
@@ -281,11 +281,11 @@ Direct access to the reports directory and error log returned HTTP 403 responses
 
 However, the directory listing exposed the application's file structure and helped identify the authentication and document download endpoints.
 
-![Exposed Old Directory](screenshots/exposedbackup.jpeg)
+<p align="center"><img src="screenshots/exposedbackup.jpeg" alt="Exposed Old Directory"></p>
 
 *Figure 9: Public directory listing exposing a historical SQL database backup.*
 
-![Patient Directory Listing](screenshots/patient-directory.png)
+<p align="center"><img src="screenshots/patient-directory.png" alt="Patient Directory Listing"></p>
 
 *Figure 10: Public directory listing revealing internal patient portal resources.*
 
