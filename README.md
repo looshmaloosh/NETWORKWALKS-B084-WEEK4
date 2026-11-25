@@ -343,13 +343,13 @@ Following this redirect, the patient portal displayed three encrypted pathology 
 
 This demonstrated that the vulnerability could provide access to protected patient resources without valid credentials.
 
-![SQL Injection Authentication Bypass](screenshots/sqliburp.png)
+<p align="center"><img src="screenshots/sqliburp.png" alt="SQL Injection Authentication Bypass"></p>
 
 *Figure 11: Burp Suite showing the SQL injection login request and successful authentication redirect.*
 
-![Patient Portal Access](screenshots/sqliburpresult.png)
+<p align="center"><img src="screenshots/sqliburpresult.png" alt="Patient Portal Access"></p>
 
-![Patient Portal Access](screenshots/sqlisuccess.png)
+<p align="center"><img src="screenshots/sqlisuccess.png" alt="Patient Portal Access"></p>
 
 *Figure 12: Burp Suite response confirming access to the patient portal and encrypted PDF reports.*
 
@@ -392,15 +392,15 @@ The `shareholders` table contained shareholder names, ownership percentages, sha
 
 Populated records confirmed the exposure of confidential organisational ownership information.
 
-![Exposed Database Backup](screenshots/exposedbackup.jpeg)
+<p align="center"><img src="screenshots/exposedbackup.jpeg" alt="Exposed Database Backup"></p>
 
 *Figure 13: Publicly accessible SQL database backup discovered through directory enumeration.*
 
-![Staff Database Exposure](screenshots/staffinfo.png)
+<p align="center"><img src="screenshots/staffinfo.png" alt="Staff Database Exposure"></p>
 
 *Figure 14: SQL backup revealing the staff database structure and confidential information categories.*
 
-![Shareholder Database Exposure](screenshots/shareholderinfo.png)
+<p align="center"><img src="screenshots/shareholderinfo.png" alt="Shareholder Database Exposure"></p>
 
 *Figure 15: SQL backup revealing the shareholder database structure and ownership information.*
 
@@ -430,7 +430,7 @@ Directory indexing also contributed to the discovery of the publicly exposed SQL
 
 #### Proof of Exposure
 
-![Patient Directory Listing](screenshots/patient-directory.png)
+<p align="center"><img src="screenshots/patient-directory.png" alt="Patient Directory Listing"></p>
 
 *Figure 10: Public directory listing revealing internal patient portal resources.*
 
@@ -468,9 +468,9 @@ Normalising this field allowed John the Ripper to recognise and process the extr
 
 The normalisation changed the representation of the permissions value without intentionally altering the remaining encryption verification data.
 
-![Extracted PDF Hashes](screenshots/pdfhashing.jpeg)
+<p align="center"><img src="screenshots/pdfhashing.jpeg" alt="Extracted PDF Hashes"></p>
 
-![Saved Hashes and PDFs](screenshots/pdfhashsave.jpeg)
+<p align="center"><img src="screenshots/pdfhashsave.jpeg" alt="Saved Hashes and PDFs"></p>
 
 *Figure 16: Extracted password verification hashes from the three encrypted PDF documents.*
 
@@ -480,11 +480,11 @@ The first PDF hash was processed using John the Ripper and the `rockyou.txt` wor
 
 Password recovery was successful.
 
-![PDF 1 Hash Normalisation](screenshots/hash1fix.png)
+<p align="center"><img src="screenshots/hash1fix.png" alt="PDF 1 Hash Normalisation"></p>
 
 *Figure 17: PDF 1 hash compatibility correction.*
 
-![PDF 1 Password Recovery](screenshots/pdf1crack.png)
+<p align="center"><img src="screenshots/pdf1crack.png" alt="PDF 1 Password Recovery"></p>
 
 *Figure 18: Successful password recovery for PDF 1 using John the Ripper.
 
@@ -494,11 +494,11 @@ The second PDF was processed using the same methodology.
 
 John the Ripper successfully recovered the password using the selected wordlist.
 
-![PDF 2 Hash Normalisation](screenshots/hash2fix.png)
+<p align="center"><img src="screenshots/hash2fix.png" alt="PDF 2 Hash Normalisation"></p>
 
 *Figure 19: PDF 2 hash compatibility correction.*
 
-![PDF 2 Password Recovery](screenshots/pdf2crack.png)
+<p align="center"><img src="screenshots/pdf2crack.png" alt="PDF 2 Password Recovery"></p>
 
 *Figure 20: Successful password recovery for PDF 2.*
 
@@ -508,11 +508,11 @@ The third PDF was processed using the same extraction and recovery method.
 
 The password was successfully recovered, completing the password recovery milestone.
 
-![PDF 3 Hash Normalisation](screenshots/hash3fix.png)
+<p align="center"><img src="screenshots/hash3fix.png" alt="PDF 3 Hash Normalisation"></p>
 
 *Figure 21: PDF 3 hash compatibility correction.*
 
-![PDF 3 Password Recovery](screenshots/pdf3crack.png)
+<p align="center"><img src="screenshots/pdf3crack.png" alt="PDF 3 Password Recovery"></p>
 
 *Figure 22: Successful password recovery for PDF 3.*
 #### Results
@@ -527,7 +527,7 @@ All three passwords were successfully recovered.
 
 Each recovered password was able to successfully unlock each confidential pdf.
 
-![Example of a exposed patient report](screenshots/patientreportredacted.png)
+<p align="center"><img src="screenshots/patientreportredacted.png" alt="Example of a exposed patient report"></p>
 
 *Figure 23: Patient login revealing detailed MySQL syntax errors.*
 The results demonstrated that password-based document protection can be undermined by weak or predictable passwords.
@@ -557,7 +557,7 @@ Rather than displaying a generic login failure, the application exposed database
 
 #### Proof of Exposure
 
-![MySQL Error Disclosure](screenshots/MYSQLERROR.png)
+<p align="center"><img src="screenshots/MYSQLERROR.png" alt="MySQL Error Disclosure"></p>
 
 *Figure 24: Patient login revealing detailed MySQL syntax errors.*
 
