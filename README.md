@@ -248,6 +248,8 @@ No exact LiteSpeed version was disclosed.
 
 *Figure 7: HTTP response headers obtained using cURL.*
 
+### 3.8 Directory Enumeration Using DirBuster
+
 DirBuster was used to identify unlinked directories and potentially exposed application resources.
 
 The enumeration identified several directories returning HTTP 301 redirects.
@@ -432,7 +434,7 @@ Directory indexing also contributed to the discovery of the publicly exposed SQL
 
 <p align="center"><img src="screenshots/patient-directory.png" alt="Patient Directory Listing"></p>
 
-*Figure 10: Public directory listing revealing internal patient portal resources.*
+*Previously shown in Figure 10: Public directory listing revealing internal patient portal resources.*
 
 #### Impact
 
@@ -486,7 +488,7 @@ Password recovery was successful.
 
 <p align="center"><img src="screenshots/pdf1crack.png" alt="PDF 1 Password Recovery"></p>
 
-*Figure 18: Successful password recovery for PDF 1 using John the Ripper.
+*Figure 18: Successful password recovery for PDF 1 using John the Ripper.*
 
 #### PDF 2 - Password Recovery
 
