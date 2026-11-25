@@ -105,8 +105,12 @@ The enumeration identified the following:
 - **Nameservers:** dns1.namecheaphosting.com and dns2.namecheaphosting.com
 - **DNSSEC Status:** Unsigned
 
+
 The results provided background information about the domain's registration and DNS infrastructure.
 
+![WHOIS Enumeration](screenshots/Whois.jpeg)
+
+*Figure 1: WHOIS enumeration identifying domain registration details.*
 
 ### 3.2 DNS Lookup Using Nslookup
 
@@ -118,7 +122,9 @@ The domain resolved to:
 
 This information was used during subsequent network reconnaissance.
 
+![Nslookup Results](screenshots/nslookup.jpeg)
 
+*Figure 2: Nslookup identifying the target's resolved IPv4 address.*
 
 ### 3.3 DNS Enumeration Using DNSRecon
 
@@ -140,7 +146,9 @@ Two notable security observations were identified:
 
 These observations were documented as potential security hardening opportunities rather than confirmed exploitable vulnerabilities.
 
+![DNSRecon Results](screenshots/dnsrecon.jpeg)
 
+*Figure 3: DNSRecon enumeration of the domain's DNS records.*
 ### 3.4 Network Enumeration Using Nmap
 
 Nmap was used to identify exposed network services and attempt service version detection.
@@ -169,6 +177,9 @@ The scan also identified the hostname `server274-1.web-hosting.com`, suggesting 
 
 Although multiple services were exposed, their presence did not independently establish exploitable vulnerabilities.
 
+![Nmap Service Enumeration](screenshots/nmap.jpeg)
+
+*Figure 4: Nmap service and version detection results.*
 
 Further inspection of the FTP service identified Pure-FTPd with anonymous authentication disabled and TLS support advertised.
 
@@ -188,6 +199,9 @@ The HTTPS request returned a `403 Forbidden` response during the WhatWeb scan.
 
 However, the exact LiteSpeed version was not disclosed, preventing reliable identification of version-specific vulnerabilities.
 
+![WhatWeb Results](screenshots/whatweb.jpeg)
+
+*Figure 5: Web server fingerprinting using WhatWeb.*
 
 ### 3.6 WAF Identification Using Wafw00f
 
@@ -199,6 +213,9 @@ This indicated that an application-layer security mechanism was potentially pres
 
 However, the presence of a WAF did not prevent the SQL injection authentication bypass demonstrated later in the assessment.
 
+![Wafw00f Results](screenshots/wafw00f.jpeg)
+
+*Figure 6: Wafw00f identifying a LiteSpeed-associated Web Application Firewall.*
 
 ### 3.7 HTTP Header Inspection Using cURL
 
@@ -224,11 +241,17 @@ These findings confirmed the web server technology previously identified through
 
 No exact LiteSpeed version was disclosed.
 
+![HTTP Header Inspection](screenshots/curl.jpeg)
 
+*Figure 7: HTTP response headers obtained using cURL.*
 
 DirBuster was used to identify unlinked directories and potentially exposed application resources.
 
 The enumeration identified several directories returning HTTP 301 redirects.
+
+![HTTP Header Inspection](screenshots/dirbuster.jpeg)
+
+*Figure 8: Dirbuster identifying potential directories to explore.*
 
 Further manual inspection revealed two important directories:
 
@@ -255,6 +278,13 @@ Direct access to the reports directory and error log returned HTTP 403 responses
 
 However, the directory listing exposed the application's file structure and helped identify the authentication and document download endpoints.
 
+![Exposed Old Directory](screenshots/olddirectory.jpeg)
+
+*Figure 9: Public directory listing exposing a historical SQL database backup.*
+
+![Patient Directory Listing](screenshots/patient-directory.png)
+
+*Figure 10: Public directory listing revealing internal patient portal resources.*
 
 ### 3.9 Reconnaissance Summary
 
@@ -309,7 +339,15 @@ Following this redirect, the patient portal displayed three encrypted pathology 
 
 This demonstrated that the vulnerability could provide access to protected patient resources without valid credentials.
 
+![SQL Injection Authentication Bypass](screenshots/sqliburp.png)
 
+*Figure 11: Burp Suite showing the SQL injection login request and successful authentication redirect.*
+
+![Patient Portal Access](screenshots/sqliburpresult.png)
+
+![Patient Portal Access](screenshots/sqlisuccess.png)
+
+*Figure 12: Burp Suite response confirming access to the patient portal and encrypted PDF reports.*
 
 #### Impact
 
@@ -319,7 +357,7 @@ This could result in unauthorised access to sensitive medical information and a 
 
 ---
 
-### 4.2 Finding V02 – Publicly Exposed SQL Database Backup
+### 4.2 Finding V02 - Publicly Exposed SQL Database Backup
 
 **Severity:** Critical (Provisional)  
 **Affected Component:** Web Server File Storage  
@@ -350,7 +388,17 @@ The `shareholders` table contained shareholder names, ownership percentages, sha
 
 Populated records confirmed the exposure of confidential organisational ownership information.
 
+![Exposed Database Backup](screenshots/exposedbackup.jpeg)
 
+*Figure 13: Publicly accessible SQL database backup discovered through directory enumeration.*
+
+![Staff Database Exposure](screenshots/staffinfo.png)
+
+*Figure 14: SQL backup revealing the staff database structure and confidential information categories.*
+
+![Shareholder Database Exposure](screenshots/shareholderinfo.png)
+
+*Figure 15: SQL backup revealing the shareholder database structure and ownership information.*
 
 #### Impact
 
@@ -378,7 +426,9 @@ Directory indexing also contributed to the discovery of the publicly exposed SQL
 
 #### Proof of Exposure
 
+![Patient Directory Listing](screenshots/patient-directory.png)
 
+*Figure 10: Public directory listing revealing internal patient portal resources.*
 
 #### Impact
 
@@ -414,6 +464,11 @@ Normalising this field allowed John the Ripper to recognise and process the extr
 
 The normalisation changed the representation of the permissions value without intentionally altering the remaining encryption verification data.
 
+![Extracted PDF Hashes](screenshots/pdfhashing.jpeg)
+
+![Saved Hashes and PDFs](screenshots/pdfhashsave.jpeg)
+
+*Figure 16: Extracted password verification hashes from the three encrypted PDF documents.*
 
 #### PDF 1 – Password Recovery
 
@@ -421,6 +476,13 @@ The first PDF hash was processed using John the Ripper and the `rockyou.txt` wor
 
 Password recovery was successful.
 
+![PDF 1 Hash Normalisation](screenshots/hash1fix.png)
+
+*Figure 17: PDF 1 hash compatibility correction.*
+
+![PDF 1 Password Recovery](screenshots/pdf1crack.png)
+
+*Figure 18: Successful password recovery for PDF 1 using John the Ripper.
 
 #### PDF 2 – Password Recovery
 
@@ -428,6 +490,13 @@ The second PDF was processed using the same methodology.
 
 John the Ripper successfully recovered the password using the selected wordlist.
 
+![PDF 2 Hash Normalisation](screenshots/hash2fix.png)
+
+*Figure 19: PDF 2 hash compatibility correction.*
+
+![PDF 2 Password Recovery](screenshots/pdf2crack.png)
+
+*Figure 20: Successful password recovery for PDF 2.*
 
 #### PDF 3 – Password Recovery
 
@@ -435,7 +504,13 @@ The third PDF was processed using the same extraction and recovery method.
 
 The password was successfully recovered, completing the password recovery milestone.
 
+![PDF 3 Hash Normalisation](screenshots/hash3fix.png)
 
+*Figure 21: PDF 3 hash compatibility correction.*
+
+![PDF 3 Password Recovery](screenshots/pdf3crack.png)
+
+*Figure 22: Successful password recovery for PDF 3.*
 #### Results
 
 | Document | Recovery Method | Result |
