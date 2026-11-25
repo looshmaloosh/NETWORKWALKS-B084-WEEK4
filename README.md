@@ -40,6 +40,8 @@ Successful exploitation demonstrated unauthorised access to patient report resou
 
 Immediate remediation of the authentication vulnerability and publicly exposed database backup is recommended.
 
+---
+
 ## 2. Scope and Methodology
 
 ### 2.1 Scope of Assessment
@@ -85,6 +87,7 @@ The following restrictions applied:
 | pdf2john | PDF password hash extraction |
 | John the Ripper | Dictionary-based password recovery |
 
+---
 
 ## 3. Reconnaissance and Enumeration
 
@@ -307,6 +310,7 @@ These discoveries provided the foundation for the subsequent vulnerability asses
 
 Further details of these vulnerabilities and their demonstrated impact are presented in the following section.
 
+---
 
 ## 4. Findings and Proof of Exploitation
 
@@ -563,8 +567,9 @@ Verbose database errors can assist attackers in identifying backend technologies
 
 Although the error disclosure does not independently demonstrate database compromise, it contributed to the identification of the SQL injection vulnerability.
 
+---
 
-## 6. Risk Rating and Assessment
+## 5. Risk Rating and Assessment
 
 The identified vulnerabilities were assessed based on their demonstrated impact, likelihood of exploitation and potential consequences for confidentiality, integrity and availability.
 
@@ -602,8 +607,9 @@ Several additional observations were identified during reconnaissance but were n
 
 These observations represent potential security improvements and do not independently establish exploitable vulnerabilities.
 
+---
 
-## 5. Recommendations and Remediation
+## 6. Recommendations and Remediation
 
 The following recommendations are proposed to address the vulnerabilities identified during the assessment.
 
@@ -682,6 +688,7 @@ The following recommendations are proposed to address the vulnerabilities identi
 | Routine Hardening | V03 – Directory Indexing | Disable directory indexing and verify file permissions. |
 | Routine Hardening | V05 – MySQL Error Disclosure | Suppress detailed errors and implement secure logging. |
 
+---
 
 ## 7. Conclusion
 
@@ -697,6 +704,8 @@ It also demonstrated the value of manual vulnerability testing, particularly whe
 
 Overall, the project strengthened my understanding of penetration testing methodology, vulnerability analysis, troubleshooting, risk assessment and professional security reporting.
 
+---
+
 ## 8. Lessons Learned
 
 - **Manual Penetration Testing:** Automated tools may fail to identify vulnerabilities that can be discovered through careful manual testing.
@@ -705,6 +714,8 @@ Overall, the project strengthened my understanding of penetration testing method
 - **Password Auditing:** Weak passwords can compromise encrypted documents through offline password recovery.
 - **Troubleshooting:** Understanding encryption formats and tool compatibility is essential when automated processes fail.
 - **Security Reporting:** Effective penetration testing requires documenting evidence, evaluating impact and recommending practical remediation measures.
+
+---
 
 ## 9. References
 
